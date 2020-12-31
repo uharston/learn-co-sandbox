@@ -1,0 +1,113 @@
+sqlite3
+
+CREATE TABLE Teachers(id);
+CREATE TABLE Students(student_id, teacher_id);
+INSERT INTO Teachers VALUES (1);
+INSERT INTO Teachers VALUES (2);
+INSERT INTO Teachers VALUES (3);
+INSERT INTO Students VALUES (1, NULL);
+INSERT INTO Students VALUES (2, 1);
+INSERT INTO Students VALUES (3, NULL);
+
+//Inner Join
+
+SELECT id AS "looky" , teachers.id AS "one", students.teacher_id AS "two"
+FROM teachers 
+INNER JOIN students 
+ON teachers.id = students.teacher_id;
+
+RESULT #=>
+
+looky       one         two
+----------  ----------  ----------
+1           1           1
+
+//Left Outer Join 
+
+SELECT teachers.id, students.teacher_id
+FROM teachers 
+LEFT OUTER JOIN students 
+ON teachers.id = students.teacher_id;
+
+RESULT #=>
+
+id          teacher_id
+----------  ----------
+1           1
+2           NULL
+3           NULL 
+
+// RIGHT OUTER JOIN 
+
+SELECT
+  Teachers.id as teacher_id,
+  Students.id as student_id
+FROM Teachers
+RIGHT OUTER JOIN Students
+ON Teachers.id = Students.teacher_id;
+
+RESULT #=>
+
+teacher_id     |  student_id
+-----------------------------
+NULL           |  1
+1              |  2
+NULL           |  3
+
+//FULL OUTER JOIN 
+
+SELECT
+  Teachers.id as teacher_id,
+  Students.id as student_id
+FROM Teachers
+FULL OUTER JOIN Students
+ON Teachers.id = Students.teacher_id;
+
+RESULT #=> 
+
+teacher_id     |  student_id
+-----------------------------
+NULL           |  1
+1              |  2
+NULL           |  3
+2              |  NULL
+3              |  NULL
+
+//MORE EXAMPLES 
+
+CREATE TABLE students (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    teacher_id INTEGER);
+
+INSERT INTO students (name, teacher_id)
+    VALUES ("Dave", 1);
+INSERT INTO students (name, teacher_id)
+    VALUES ("Jessie", 1);
+INSERT INTO students (name, teacher_id)
+    VALUES ("Bob", 1);
+INSERT INTO students (name, teacher_id)
+    VALUES ("Sara", 2);
+INSERT INTO students (name, teacher_id)
+    VALUES ("George",  2);
+INSERT INTO students (name, teacher_id)
+    VALUES ("Alexis",  NULL);
+
+CREATE TABLE teachers (
+    id INTEGER PRIMARY KEY,
+    name TEXT);
+    
+    INSERT INTO teachers (name)
+    VALUES ("Joe");
+INSERT INTO teachers (name)
+    VALUES ("Steven");
+INSERT INTO teachers (name)
+    VALUES ("Jeff");
+    
+SELECT students.name AS "Student", teachers.name AS "Teacher's Name"
+FROM students 
+LEFT OUTER JOIN teachers
+ON students.teacher_id = teachers.id;
+
+SELECT * FROM Teachers
+   LEFT OUTER JOIN Students on Teachers.id = Students.teacher_id;
